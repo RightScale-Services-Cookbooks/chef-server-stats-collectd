@@ -16,3 +16,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+directory "/opt/chef-utils" do
+  owner "root"
+  group "root"
+  mode "0777"
+  action :create
+end
+
+git "/opt/chef-utils" do
+  repository "git://github.com/facebook/chef-utils.git
+  revision "master"
+  action :sync
+end
