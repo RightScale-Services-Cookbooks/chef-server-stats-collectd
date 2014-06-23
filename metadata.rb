@@ -8,6 +8,7 @@ version          '0.1.0'
 
 depends "rightscale"
 depends "collectd"
+depends "chef-server"
 depends "chef-server-blueprint"
 
 recipe "chef_server_stats_collectd::default"
