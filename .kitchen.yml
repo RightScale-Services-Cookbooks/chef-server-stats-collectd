@@ -8,7 +8,9 @@ driver:
 # network:
 # - ["forwarded_port", {guest: 8080, host: 8080}]
 # - ["forwarded_port", {guest: 8443, host: 8443, auto_correct: true}]
-#
+driver_config:
+    use_vagrant_berkshelf_plugin: true
+    require_chef_omnibus: 10.32.2
 provisioner:
   name: chef_solo
 
@@ -21,5 +23,10 @@ platforms:
 suites:
   - name: primary
     run_list:
-      - recipe["chef_server_stats_collectd::default"]
-    attributes:
+      - recipe[yum]
+      - recipe[chef-server-blueprint]
+      - recipe[ruby]      
+      - recipe[rubygems_install]
+      - recipe[chef_server_stats_collectd::yum]
+      - recipe[chef_server_stats_collectd]
+    attributes: { "chef-server-blueprint/api_fqdn": "node.example.com" }

@@ -1,4 +1,4 @@
-# rsc_skeleton_cookbook cookbook
+# chef_server_stats_collectd cookbook
 
 # Requirements
 
