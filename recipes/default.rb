@@ -34,6 +34,10 @@ git "/opt/chef-utils" do
   action :sync
 end
 
+execute "curl -L https://www.opscode.com/chef/install.sh | sudo bash"
+
+execute 'echo -e "\n" | knife configure --defaults -y'
+
 gem_package "json" do
   action :install
 end
