@@ -12,5 +12,5 @@
 
 <Plugin exec>
   # userid plugin executable plugin args
-  Exec "nobody" "/opt/chef-utils/bin/chef-server-collectd.rb" "-h" "<%= @instance_uuid %>" "-i" "20"
+  Exec "chef_server" "/opt/chef-utils/bin/chef-server-collectd.rb" "-h" "<%= @instance_uuid %>" "-i" "20"
 </Plugin>

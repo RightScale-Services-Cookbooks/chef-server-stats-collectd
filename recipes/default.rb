@@ -33,11 +33,20 @@ git "/opt/chef-utils" do
   revision "master"
   action :sync
 end
+directory "/opt/chef-server/embedded/.chef" do
+  owner "chef_server"
+  group "chef_server"
+  recursive true
+  mode 0777
+  action :create
+end
+
 bash "install and configure knife" do
   flags "-x"
   code <<-EOF
     curl -L https://www.opscode.com/chef/install.sh | bash
     echo -e "\n" | knife configure --defaults -y
+    su chef_server -c 'echo -e "\n" | knife configure --defaults -y'
 EOF
 end
 
