@@ -34,7 +34,7 @@ git "/opt/chef-utils" do
   action :sync
 end
 bash "install and configure knife" do
-  flags "-ex"
+  flags "-x"
   code <<-EOF
     curl -L https://www.opscode.com/chef/install.sh | sudo bash
     echo -e "\n" | knife configure --defaults -y
