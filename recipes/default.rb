@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+rightscale_marker :begin
+
 service "collectd" do
   action :nothing 
 end
@@ -75,9 +77,11 @@ rightscale_enable_collectd_plugin "exec"
 template(::File.join(node[:rightscale][:collectd_plugin_dir], "chef-server.conf")) do
   backup false
   source "chef-server.conf.erb"
-  notifies :restart, resources(:service => "collectd")
+  notifies :restart, resources(:service => "collectd"), :delayed
   variables(
     :collectd_lib => node[:rightscale][:collectd_lib],
     :instance_uuid => node[:rightscale][:instance_uuid]
   )
 end
+
+rightscale_marker :end
