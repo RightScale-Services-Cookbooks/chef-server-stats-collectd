@@ -33,10 +33,13 @@ git "/opt/chef-utils" do
   revision "master"
   action :sync
 end
-
-execute "curl -L https://www.opscode.com/chef/install.sh | sudo bash"
-
-execute 'echo -e "\n" | knife configure --defaults -y'
+bash "install and configure knife" do
+  flags "-ex"
+  code <<-EOF
+    curl -L https://www.opscode.com/chef/install.sh | sudo bash
+    echo -e "\n" | knife configure --defaults -y
+EOF
+end
 
 gem_package "json" do
   action :install
