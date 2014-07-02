@@ -34,8 +34,6 @@ git "/opt/chef-utils" do
   action :sync
 end
 
-include_recipe "ruby::default"
-
 gem_package "json" do
   action :install
 end
