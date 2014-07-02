@@ -36,7 +36,7 @@ end
 bash "install and configure knife" do
   flags "-x"
   code <<-EOF
-    curl -L https://www.opscode.com/chef/install.sh | sudo bash
+    curl -L https://www.opscode.com/chef/install.sh | bash
     echo -e "\n" | knife configure --defaults -y
 EOF
 end
