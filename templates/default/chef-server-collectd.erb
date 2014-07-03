@@ -9,9 +9,9 @@ sampling_interval = 20
 while true do
   start_run = Time.now.to_i
   next_run = start_run + sampling_interval
-  stats=JSON.parse(`/opt/chef-utils/chef-server-stats/chef-server-stats`)
+  stats=JSON.parse(`/opt/chef/bin/knife exec /opt/chef-utils/chef-server-stats/chef-server-stats -c ~/.chef/knife.rb`)
   stats.each do |k,v|
-    puts("PUTVAL #{hostname}/#{k.split('.')[0..1].join('_')}/gauge-#{k.split('.')[2]} #{start_run}:#{v}")
+    puts("PUTVAL #{hostname}/#{k.split('.')[0..1].join('_')}/gauge-#{k.split('.')[2]} interval=#{sampling_interval} #{start_run}:#{v}")
   end
   while((time_left = (next_run - Time.now.to_i)) > 0) do
       sleep(time_left)
