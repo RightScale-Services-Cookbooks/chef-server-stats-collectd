@@ -65,6 +65,19 @@ template "/etc/chef-server/knife.rb" do
   action :create
 end
 
+directory "/root/.chef" do
+  owner "root"
+  group "root"
+  mode "0777"
+  action :create
+end
+
+link "/root/.chef/knife.rb" do
+  to "/etc/chef-server/knife.rb"
+  link_type :symbolic
+  action :create
+end
+
 bash "create user" do
   flags "-x"
   code <<-EOF
