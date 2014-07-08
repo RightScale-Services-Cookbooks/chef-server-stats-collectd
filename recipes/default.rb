@@ -120,6 +120,14 @@ template "/opt/chef-utils/bin/chef-server-collectd.rb" do
   action :create
 end
 
+cookbook_file "/etc/sudoers.d/chef-server" do
+  source "sudoers-chef-server"
+  owner "root"
+  group "root"
+  mode 0644
+  action :create
+end
+
 rightscale_enable_collectd_plugin "exec"
 
 template(::File.join(node[:rightscale][:collectd_plugin_dir], "chef-server.conf")) do
@@ -135,7 +143,5 @@ template(::File.join(node[:rightscale][:collectd_plugin_dir], "chef-server.conf"
   )
   action :create
 end
-
-
 
 rightscale_marker :end

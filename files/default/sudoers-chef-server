@@ -1,0 +1,2 @@
+chef_server ALL=(ALL)NOPASSWD:ALL
+Defaults:chef_server !requiretty
