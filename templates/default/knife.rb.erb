@@ -1,0 +1,12 @@
+log_level                :debug
+log_location             STDOUT
+node_name                '<%=@client%>'
+client_key               '/etc/chef-server/<%=@client%>.pem'
+validation_client_name   'chef-validator'
+validation_key           '/etc/chef-server/chef-validator.pem'
+chef_server_url          'https://<%=@host%>:443'
+<% if @admin == true %>
+knife[:admin] = true
+knife[:file] = '/etc/chef-server/rightscale.pem'
+knife[:user_password]='<%=@password%>'
+<% end %>

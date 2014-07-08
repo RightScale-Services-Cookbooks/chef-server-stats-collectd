@@ -47,9 +47,57 @@ bash "install and configure knife" do
   flags "-x"
   code <<-EOF
     curl -L https://www.opscode.com/chef/install.sh | bash
-    echo -e "\n" | /opt/chef/bin/knife configure --defaults -y
-    su chef_server -c 'echo -e "\n" | /opt/chef/bin/knife configure --defaults -y'
 EOF
+end
+
+require 'securerandom'
+template "/etc/chef-server/knife.rb" do
+  source "knife.rb.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables(
+              :admin => true,
+              :client => 'admin',
+              :host => node[:chef][:server_name],
+              :password => SecureRandom.hex(15)
+            )
+  action :create
+end
+
+bash "create user" do
+  flags "-x"
+  code <<-EOF
+    knife user create rightscale -c /etc/chef-server/knife.rb -d
+  EOF
+end
+
+file "/etc/chef-server/rightscale.pem" do
+  owner "chef_server"
+  group "chef_server"
+  mode 0777
+  action :touch
+end
+
+directory "/opt/chef-server/embedded/.chef" do
+  owner "chef_server"
+  group "chef_server"
+  mode 0777
+  action :create
+end
+
+template "/opt/chef-server/embedded/.chef/knife.rb" do
+  source "knife.rb.erb"
+  owner "chef_server"
+  group "chef_server"
+  mode 0644
+  variables(
+              :admin => false,
+              :client => 'rightscale',
+              :host => node[:chef][:server_name],
+              :password => SecureRandom.hex(15)
+            )
+  action :create
 end
 
 gem_package "json" do
