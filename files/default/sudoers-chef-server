@@ -1,2 +1,2 @@
-chef_server ALL=(ALL)NOPASSWD:ALL
+chef_server ALL=(ALL)NOPASSWD:/opt/chef-utils/bin/chef-server-collectd.rb
 Defaults:chef_server !requiretty
