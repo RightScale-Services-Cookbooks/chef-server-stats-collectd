@@ -11,3 +11,8 @@ depends "chef-server"
 depends "chef-server-blueprint"
 
 recipe "chef_server_stats_collectd::default", "installs chef-server-stats and collectd plugin"
+
+attribute "chef/server_name",
+  :display_name => "Chef Server Name",
+  :description => "Chef Server Name, LOCAL_HOSTNAME",
+  :required => "required"
